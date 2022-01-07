@@ -5,12 +5,12 @@ import Title from "./Title";
 import { Row, Col, Container } from "react-bootstrap";
 import ProductCard from "./ProductCard";
 
-const LatestProducts = () => {
+const PopularProducts = () => {
   const [products, setProducts] = useState([]);
 
   const get_products = async () => {
     await axios
-      .get(`/api/shop/latest-products/${8}`)
+      .get(`/api/shop/popular-products/${8}`)
       .then((response) => {
         setProducts(response.data);
       })
@@ -28,7 +28,7 @@ const LatestProducts = () => {
 
   return (
     <Container>
-      <Title title="Latest Products" />
+      <Title title="Popular Products" />
 
       <Row>
         {products.map((product) => (
@@ -41,4 +41,4 @@ const LatestProducts = () => {
   );
 };
 
-export default LatestProducts;
+export default PopularProducts;
