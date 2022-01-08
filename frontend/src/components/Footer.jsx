@@ -20,6 +20,7 @@ const Footer = () => {
           </Col>
           <Col md={12} lg={4} className="my-3">
             <h3 className="text-center">Quick Links</h3>
+
             <ul className="text-center m-0 p-0" style={{ listStyle: "none" }}>
               <li>
                 <Link to="/">Home</Link>
