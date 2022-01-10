@@ -5,15 +5,21 @@ from .serializers import *
 
 
 class LatestProductApiView(APIView):
-    def get(self, request, number=8):
-        products = Product.objects.all()[0:number]
+    def get(self, request, number):
+        page = int(request.GET.get("page", 1))
+        start = (page - 1) * number
+        end = page * number
+        products = Product.objects.all()[start:end]
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
 
 class PopularProductApiView(APIView):
     def get(self, request, number=8):
-        products = Product.objects.all().order_by("-views")[0:number]
+        page = int(request.GET.get("page", 1))
+        start = (page - 1) * number
+        end = page * number
+        products = Product.objects.all().order_by("-views")[start:end]
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
