@@ -4,7 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Button, ListGroup } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
-import { setShopProducts } from "../redux/actions/shopActions";
+import { setShopProducts, addShopProducts } from "../redux/actions/shopActions";
 
 const ShopScreen = () => {
   const [query] = useSearchParams();
@@ -13,11 +13,23 @@ const ShopScreen = () => {
   const dispatch = useDispatch();
 
   const getProducts = async (more = false) => {
+    const numberOfProduct = 3;
+    let url = `/api/shop/latest-products/${numberOfProduct}?page=${page}`;
+
+    if (query.get("category") === "popular") {
+      url = `/api/shop/popular-products/${numberOfProduct}?page=${page}`;
+    } else if (query.get("category")) {
+      let category = query.get("category");
+      url = `/api/shop/latest-products/${numberOfProduct}?page=${page}&category=${category}`;
+    }
+
     await axios
-      .get(`/api/shop/latest-products/9?page=${page}`)
+      .get(url)
       .then((response) => {
         if (!more) {
           dispatch(setShopProducts(response.data));
+        } else if (more) {
+          dispatch(addShopProducts(response.data));
         }
       })
       .catch((error) => {
@@ -48,7 +60,12 @@ const ShopScreen = () => {
                 </Col>
               ))}{" "}
               <div className="text-center my-3">
-                <Button variant="dark" onClick={() => {}}>
+                <Button
+                  variant="dark"
+                  onClick={() => {
+                    getProducts(true);
+                  }}
+                >
                   Load More
                 </Button>
               </div>
