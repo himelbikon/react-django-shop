@@ -7,10 +7,7 @@ const ProductCard = ({ product }) => {
     <div>
       <div className="shadow my-2">
         <div>
-          <Link
-            to={`/product/${product.id}/`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          <Link className="link" to={`/product/${product.id}/`}>
             {product.image ? (
               <Image src={product.image} fluid className="w-100" />
             ) : (
@@ -26,10 +23,7 @@ const ProductCard = ({ product }) => {
         <div className="p-3">
           <h6>
             {" "}
-            <Link
-              to={`/product/${product.id}/`}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link to={`/product/${product.id}/`} className="link">
               {product.name}
             </Link>{" "}
           </h6>
