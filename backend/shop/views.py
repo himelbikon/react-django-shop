@@ -4,6 +4,15 @@ from .models import *
 from .serializers import *
 
 
+class ProductApiView(APIView):
+    def get(self, request, id):
+        product = Product.objects.get(pk=id)
+        product.views += 1
+        product.save()
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+
+
 class LatestProductApiView(APIView):
     def get(self, request, number):
         page = int(request.GET.get("page", 1))

@@ -7,10 +7,6 @@ import ProductCard from "../components/ProductCard";
 import { setShopProducts, addShopProducts } from "../redux/actions/shopActions";
 
 const ShopScreen = () => {
-  // const linkStyle = {
-  //   textDecoration: "none",
-  //   color: "inherit",
-  // };
   const [query] = useSearchParams();
 
   const { products, page } = useSelector((state) => state.shopProducts);
@@ -61,9 +57,9 @@ const ShopScreen = () => {
   return (
     <div>
       <Container>
-        {/* <h1>
+        <h1>
           products: {products.length}, page: {page}
-        </h1> */}
+        </h1>
         {/* {JSON.stringify(products)} */}
         <Row>
           <Col md={9} sm={12}>
