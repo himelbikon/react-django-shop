@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
-import { addToCart } from "../redux/actions/cartActions";
+import { addToCart, deleteFromCart } from "../redux/actions/cartActions";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
-  const cart = useSelector((state) => state.cart);
+  const [inCart, setinCart] = useState(false);
+  // const [cart, setcart] = useState([]);
 
+  const cart = useSelector((state) => state.cart);
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -50,18 +52,41 @@ const ProductDetails = () => {
             )}
           </Col>
           <Col md={6} sm={12}>
-            <h3 className="mb-3">
-              {product.name} {cart.length}{" "}
-            </h3>
+            <h3 className="mb-3">{product.name}</h3>
 
             <p className="my-4">Price: {product.price}</p>
 
             <p className="my-4">Views: {product.views}</p>
 
             <div className="my-4">
-              <Button onClick={() => dispatch(addToCart(product))}>
-                Add To Cart
-              </Button>
+              {!inCart ? (
+                <Button
+                  className="me-2 my-2"
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                    setinCart(true);
+                  }}
+                >
+                  Add To Cart
+                </Button>
+              ) : (
+                <Button className="me-2 my-2" disabled>
+                  Add To Cart
+                </Button>
+              )}
+
+              {inCart ? (
+                <Button
+                  variant="danger"
+                  className="me-2 my-2"
+                  onClick={() => {
+                    dispatch(deleteFromCart(product.id));
+                    setinCart(false);
+                  }}
+                >
+                  delete from cart
+                </Button>
+              ) : null}
             </div>
 
             {product.details ? (

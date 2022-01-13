@@ -11,15 +11,20 @@ export const cartReducer = (state = initialState, action) => {
 
       if (exist.length) {
         for (let i = 0; i < state.length; i++) {
-          // console.log(exist);
-          if (state[i].product.id === exist[0].product.id) {
+          if (state[i].product.id == action.payload.product.id) {
             state[i].quantity = state[i].quantity + 1;
           }
         }
       } else {
-        state.push(action.payload);
+        state = state.concat(action.payload);
       }
 
+      return state;
+
+    case cartConstants.DELETE_FROM_CART:
+      state = state.filter((item) => {
+        return item.product.id !== action.payload.id;
+      });
       return state;
 
     default:

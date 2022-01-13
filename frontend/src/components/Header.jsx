@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 const Header = () => {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -36,6 +39,10 @@ const Header = () => {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
+
+              <LinkContainer to="/cart">
+                <Nav.Link>Cart ({cart.length}) </Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
